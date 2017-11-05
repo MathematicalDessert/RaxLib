@@ -1,0 +1,9 @@
+
+# Build folder
+Build/
+
+# Used for testing package.lua, but tests commented out
+json.lua
+
+# Used by precommit hook (gets force added)
+Combined.rbxmx

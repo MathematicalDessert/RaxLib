@@ -1,0 +1,50 @@
+#!/bin/sh
+#
+# An example hook script to verify what is about to be committed.
+# Called by "git commit" with no arguments.  The hook should
+# exit with non-zero status after issuing an appropriate message if
+# it wants to stop the commit.
+#
+# To enable this hook, rename this file to "pre-commit".
+
+if [ -f Combined.rbxmx ]; then
+	rm Combined.rbxmx
+	git checkout Combined.rbxmx
+fi
+
+git stash save -q -k -a
+
+staged=$(git diff --cached --name-only --diff-filter=ACM);
+
+hooksPath=$(git config --get core.hooksConfig)
+hooksPath=${hooksPath:-$GIT_DIR/hooks}
+echo "$staged" | lua $hooksPath/package-checkout.lua
+status=$?
+if [ $status != 0 ]; then
+	exit $status
+fi
+
+if [ -f Build/Combined.rbxmx ]; then
+	mv Build/Combined.rbxmx .
+fi
+
+if [ -d Build/ ]; then
+	rm -rf Build/
+fi
+
+if [ -f Combined.rbxmx ]; then
+	git add -f Combined.rbxmx
+else
+	echo "No Combined.rbxmx, cancelling"
+	git stash pop -q
+	exit 1
+fi
+
+git stash pop -q
+
+if [ -n "$(git status --porcelain)" ]; then 
+	exit 0
+else
+	git status
+	exit 1
+fi

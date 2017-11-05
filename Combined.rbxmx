@@ -1,0 +1,129 @@
+<roblox version="4">
+	<Item class="Folder">
+		<Properties>
+			<P name="Name">PackagingTest</P>
+		</Properties>
+		<Item class="LocalScript">
+			<Properties>
+				<P name="Name">Client</P>
+				<P name="Source">print("LocalScript")
+</P>
+			</Properties>
+		</Item>
+		<Item class="Folder">
+			<Properties>
+				<P name="Name">RegularFolder</P>
+			</Properties>
+			<Item class="ModuleScript">
+				<Properties>
+					<P name="Name">SomeModule</P>
+					<P name="Source">print("Just some module")
+</P>
+				</Properties>
+			</Item>
+		</Item>
+		<Item class="Script">
+			<Properties>
+				<P name="Name">Server</P>
+				<P name="Source">print("Normal script")
+</P>
+			</Properties>
+			<Item class="ModuleScript">
+				<Properties>
+					<P name="Name">Module</P>
+					<P name="Source">print("ModuleScript")
+</P>
+				</Properties>
+			</Item>
+		</Item>
+	</Item>
+	<Item class="Folder">
+		<Properties>
+			<P name="Name">Server</P>
+		</Properties>
+		<Item class="Folder">
+			<Properties>
+				<P name="Name">Modules</P>
+			</Properties>
+			<Item class="ModuleScript">
+				<Properties>
+					<P name="Name">Remotes</P>
+					<P name="Source">--[[
+    File Name: Remotes.lua
+    Author(s): Pkamara (GameAnnounce)
+    Type: ModuleScript
+
+    A dynamic wrapper for remoteevents (and only remote events)
+]]--
+
+local Remote = {}
+
+function Remote:new(remote, remoteKey)
+    if not remote then
+        remote = Instance.new("RemoteEvent") -- doesn't need a parent, user can do it themselves
+    end
+
+    local newRemote = newproxy(true)
+    local remoteMeta = getmetatable(newRemote)
+    local remoteData = setmetatable({
+        users = {}, -- store the users who have called this remote
+        buffer = {}, -- a buffer of all current packets (should be cleared often to avoid high memory usage)
+        remoteKey = remoteKey, -- yes yes, I know but still - some type of key
+        total_packets_recieved = 0, -- how many packets have we recieved and read
+        total_packets_discarded = 0, -- how many packets have we recieved and discarded
+    }, 
+    {
+        __metatable="locked"
+    }) -- all data that we store about the remote
+
+    -- get table of all users
+    function remoteData:getUsers()
+        return remoteData.users
+    end
+
+    -- get a specific user
+    function remoteData:getUser(userId)
+        remoteData.users[userId]
+    end
+
+    return newRemote
+end
+
+-- return lib
+return Remote
+</P>
+				</Properties>
+			</Item>
+		</Item>
+		<Item class="ModuleScript">
+			<Properties>
+				<P name="Name">RaxServer</P>
+				<P name="Source">--[[
+    File Name: RaxServer.lua
+    Author(s): Pkamara (GameAnnounce)
+    Type: Script
+
+    Description Here (but i'm too lazy,,,,)
+]]--
+
+--[[
+    So let's just get something straight first:
+
+    Those of you protecting the server as if it's an egg, it's
+    not that fucking fragile. Filtering Enabled handles most of
+    the annoying exploits which affect others.
+
+    The MAIN problem I see is the use of remotes.
+
+    Developers seem to misunderstand how to use remotes, and for that
+    matter how to secure them.
+
+    Throughout Rax I will detail why I'm doing certain things, and why you
+    should do them too.
+]]--
+
+</P>
+			</Properties>
+		</Item>
+	</Item>
+</roblox>
