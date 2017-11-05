@@ -111,6 +111,16 @@ local itemFormat = '<Item class="%s">\n'
 local propTemplate = '<P name="%s">%s</P>\n'
 local chars = {["<"] = "&lt;",[">"] = "&gt;"}
 
+local function childrenSorter(Children)
+	return function(a,b)
+		a = Children[a]
+		b = Children[b]
+		if (not a.File) ~= (not b.File) then
+			return not a.File
+		end return a.Name < b.Name
+	end
+end
+
 local function writeInstance(out,inst,t)
 	out:write(("\t"):rep(t),itemFormat:format(inst.ClassName))
 	out:write(("\t"):rep(t+1),"<Properties>\n")
@@ -124,7 +134,13 @@ local function writeInstance(out,inst,t)
 		out:write('</P>\n')
 	end
 	out:write(("\t"):rep(t+1),"</Properties>\n")
-	for k,v in pairs(inst.Children) do
+	local children = {}
+	for k in pairs(inst.Children) do
+		children[#children+1] = k
+	end
+	table.sort(children,childrenSorter(inst.Children))
+	for k,v in pairs(children) do
+		k,v = v,inst.Children[v]
 		writeInstance(out,v,t+1)
 	end
 	out:write(("\t"):rep(t),"</Item>\n")
