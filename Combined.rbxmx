@@ -22,6 +22,24 @@
 </P>
 			</Properties>
 		</Item>
+		<Item class="ModuleScript">
+			<Properties>
+				<P name="Name">File A</P>
+				<P name="Source"></P>
+			</Properties>
+		</Item>
+		<Item class="ModuleScript">
+			<Properties>
+				<P name="Name">File B</P>
+				<P name="Source"></P>
+			</Properties>
+		</Item>
+		<Item class="ModuleScript">
+			<Properties>
+				<P name="Name">File C</P>
+				<P name="Source"></P>
+			</Properties>
+		</Item>
 		<Item class="Script">
 			<Properties>
 				<P name="Name">Server</P>
