@@ -3,13 +3,6 @@
 		<Properties>
 			<P name="Name">PackagingTest</P>
 		</Properties>
-		<Item class="LocalScript">
-			<Properties>
-				<P name="Name">Client</P>
-				<P name="Source">print("LocalScript")
-</P>
-			</Properties>
-		</Item>
 		<Item class="Folder">
 			<Properties>
 				<P name="Name">RegularFolder</P>
@@ -21,6 +14,13 @@
 </P>
 				</Properties>
 			</Item>
+		</Item>
+		<Item class="LocalScript">
+			<Properties>
+				<P name="Name">Client</P>
+				<P name="Source">print("LocalScript")
+</P>
+			</Properties>
 		</Item>
 		<Item class="Script">
 			<Properties>
